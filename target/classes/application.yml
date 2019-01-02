@@ -1,0 +1,18 @@
+spring.datasource:
+  platform: org.hibernate.dialect.PostgreSQL9Dialect
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://localhost/jdbcdb?currentSchema=jdbc
+  username: lisheng
+  password: Lisheng114
+
+spring:
+  jpa:
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+    show-sql: true
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+     
+server:
+  port: 8080
