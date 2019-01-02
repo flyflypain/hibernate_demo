@@ -15,9 +15,9 @@ import lombok.Data;
  * @author lisheng
  *
  */
+@Data
 @Entity
 @Table(name = "Balance")
-@Data
 public class Balance {
 
 	public Balance(String account, int amount) {

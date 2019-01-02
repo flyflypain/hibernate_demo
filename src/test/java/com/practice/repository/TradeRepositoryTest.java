@@ -2,6 +2,9 @@ package com.practice.repository;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.practice.demo.DemoApplication;
+import com.practice.enums.CashflowSide;
+import com.practice.enums.TradeType;
+import com.practice.model.Cashflow;
+import com.practice.model.Trade;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -26,22 +33,23 @@ public class TradeRepositoryTest {
 
 		tradeRepository.deleteAll();
 //		cashflowRepository.deleteAll();
-//
-//		// 实例化trade
-//		Trade trade1 = new Trade("test1", "test2", 100, TradeType.TRANSFER);
-//		List<Cashflow> cashflowList = new ArrayList<Cashflow>();
-//		Cashflow cashflow1 = new Cashflow("test2", null, 100, CashflowSide.PAY);
-//		Cashflow cashflow2 = new Cashflow(null, "test1", 100, CashflowSide.RECEIVE);
-//		cashflowList.add(cashflow1);
-//		cashflowList.add(cashflow2);
-//		trade1.setCashflowList(cashflowList);
+
+		// 实例化trade
+		Trade trade1 = new Trade("test1", "test2", 100, TradeType.TRANSFER);
+		List<Cashflow> cashflowList = new ArrayList<Cashflow>();
+		Cashflow cashflow1 = new Cashflow("test2", null, 100, CashflowSide.PAY);
+		Cashflow cashflow2 = new Cashflow(null, "test1", 100, CashflowSide.RECEIVE);
+		trade1.addCashflow(cashflow1);
+		trade1.addCashflow(cashflow2);
 //		tradeRepository.saveAndFlush(trade1);
+		cashflowRepository.saveAndFlush(cashflow1);
+		cashflowRepository.saveAndFlush(cashflow2);
 	}
 
 	@Test
 	public void CURD_create() {
-		assertEquals(0, tradeRepository.findAll().size());
-		assertEquals(0, cashflowRepository.findAll().size());
+		assertEquals(1, tradeRepository.findAll().size());
+		assertEquals(2, cashflowRepository.findAll().size());
 	}
 
 //	@Test

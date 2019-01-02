@@ -1,5 +1,6 @@
 package com.practice.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,9 +8,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.practice.enums.CashflowSide;
+
+import lombok.Data;
 
 /**
  * 银行交易产生的现金流entity
@@ -17,6 +22,7 @@ import com.practice.enums.CashflowSide;
  * @author lisheng
  *
  */
+@Data
 @Entity
 @Table(name = "Cashflow")
 public class Cashflow {
@@ -73,5 +79,13 @@ public class Cashflow {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "cashflow_side")
 	private CashflowSide cashflowSide;
+
+	/**
+	 * 相对应的trade
+	 * 
+	 */
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinColumn(name = "trade_id")
+	private Trade trade;
 
 }
