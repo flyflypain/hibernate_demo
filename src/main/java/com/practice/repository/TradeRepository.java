@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.practice.model.Trade;
 
@@ -15,7 +16,7 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
 
 	Trade findByTradeId(long tradeId);
 
-	@SuppressWarnings("unchecked")
+	@Transactional
 	Trade saveAndFlush(Trade trade);
 
 //	@Transactional

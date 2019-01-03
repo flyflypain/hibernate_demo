@@ -12,9 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.practice.enums.CashflowSide;
 import com.practice.enums.TradeType;
 
 import lombok.Data;
@@ -82,18 +84,35 @@ public class Trade {
 	/**
 	 * 相对应的cashflow
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "trade", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "trade_id")
 	private List<Cashflow> cashflowList;
 
 	/**
 	 * 绑定cashflow到Trade
 	 */
-	public void addCashflow(Cashflow cashflow) {
+	private void addCashflow(Cashflow cashflow) {
 		if (cashflowList == null) {
 			cashflowList = new ArrayList<Cashflow>();
 		}
 		cashflowList.add(cashflow);
-		cashflow.setTrade(this);
 	}
 
+	/**
+	 * 生成现金流
+	 */
+	public void createCashflowForTrade() {
+		switch (tradeType) {
+		case TRANSFER:
+			addCashflow(new Cashflow(executeAccount, null, amount, CashflowSide.PAY));
+			addCashflow(new Cashflow(null, tragetAccount, amount, CashflowSide.RECEIVE));
+			break;
+		case DEPOSIT:
+			addCashflow(new Cashflow(null, tragetAccount, amount, CashflowSide.RECEIVE));
+			break;
+		case WITHDRAW:
+			addCashflow(new Cashflow(executeAccount, null, amount, CashflowSide.PAY));
+			break;
+		}
+	}
 }

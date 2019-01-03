@@ -1,12 +1,16 @@
 package com.practice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.practice.event.TradeEvent;
+import com.practice.event.DepositEvent;
+import com.practice.event.TransferEvent;
+import com.practice.event.WithdrawEvent;
 import com.practice.model.Trade;
+import com.practice.repository.TradeRepository;
 
 @Service
 public class TradeService {
@@ -14,9 +18,33 @@ public class TradeService {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
+	@Autowired
+	private TradeRepository tradeRepository;
+
 	@Transactional
-	public void executeTrade(Trade trade) {
-		publisher.publishEvent(new TradeEvent(trade));
+	public Trade executeTrade(Trade trade) {
+		trade.createCashflowForTrade();
+		Trade result = tradeRepository.saveAndFlush(trade);
+		publishTradeEvent(trade);
+		return result;
 	}
 
+	/**
+	 * 发布交易trade event
+	 */
+	private void publishTradeEvent(Trade trade) {
+		ApplicationEvent event = null;
+		switch (trade.getTradeType()) {
+		case TRANSFER:
+			event = new TransferEvent(trade);
+			break;
+		case DEPOSIT:
+			event = new DepositEvent(trade);
+			break;
+		case WITHDRAW:
+			event = new WithdrawEvent(trade);
+			break;
+		}
+		publisher.publishEvent(event);
+	}
 }

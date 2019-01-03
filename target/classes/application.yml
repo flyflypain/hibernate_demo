@@ -9,7 +9,7 @@ spring:
   jpa:
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
-    show-sql: true
+    show-sql: false
     database: POSTGRESQL
     hibernate:
       ddl-auto: update
