@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import com.practice.enums.CashflowSide;
 import com.practice.enums.TradeType;
@@ -30,7 +31,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Trade")
-public class Trade {
+public class Trade extends AbstractModel {
 
 	public Trade(String targetAccount, String executeAccount, int amount, TradeType tradeType) {
 		this.tragetAccount = targetAccount;
@@ -71,7 +72,7 @@ public class Trade {
 	/**
 	 * 更新版本
 	 */
-	@Column(name = "version")
+	@Version
 	private int version = 1;
 
 	/**

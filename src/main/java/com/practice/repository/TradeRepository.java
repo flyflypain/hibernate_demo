@@ -19,14 +19,4 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
 	@Transactional
 	Trade saveAndFlush(Trade trade);
 
-//	@Transactional
-//	@Modifying
-//	@Query("update Balance b set b.amount = amount + ?1 where b.account = ?2")
-//	void addBalance(int balance, String account);
-//
-//	@Transactional
-//	@Modifying
-//	@Query("update Balance b set b.amount = amount - ?1 where b.account = ?2")
-//	void minusBalance(int balance, String account);
-
 }

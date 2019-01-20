@@ -19,8 +19,12 @@ public class DemoFilterImpl extends OncePerRequestFilter implements Ordered {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		System.out.println("-----> Demofilter");
-//		request = new DemoHttpServletRequestWrapper(request);
+		String origin = request.getHeader("Origin");
+		response.setHeader("Access-Control-Allow-Origin", origin);
+		response.setHeader("Access-Control-Allow-Methods", "POST,GET");
+		response.setHeader("Access-Control-Allow-Headers", "Authorization,content-type");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+
 		filterChain.doFilter(request, response);
 	}
 

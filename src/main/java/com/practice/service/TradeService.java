@@ -1,5 +1,7 @@
 package com.practice.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -29,6 +31,17 @@ public class TradeService {
 		return result;
 	}
 
+	@Transactional
+	public Trade updateTrade(Trade trade) {
+		Trade result = tradeRepository.saveAndFlush(trade);
+		return result;
+	}
+
+	public Trade getTrade(long tradeId) {
+		Trade result = tradeRepository.findByTradeId(tradeId);
+		return result;
+	}
+
 	/**
 	 * 发布交易trade event
 	 */
@@ -46,5 +59,10 @@ public class TradeService {
 			break;
 		}
 		publisher.publishEvent(event);
+	}
+
+	public List<Trade> getTrade() {
+		List<Trade> result = tradeRepository.findAll();
+		return result;
 	}
 }
