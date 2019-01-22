@@ -22,10 +22,10 @@ public class SelfAuthenticationFailureHandler implements AuthenticationFailureHa
 
 		AuthResponse authReponse = new AuthResponse();
 
-		authReponse.setStatus("400");
 		authReponse.setMsg("Login failure");
 
 		response.setContentType("application/json");
+		response.setStatus(400);
 		response.getWriter().write(JSON.toJSONString(authReponse));
 
 	}
