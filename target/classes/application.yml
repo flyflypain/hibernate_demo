@@ -16,3 +16,10 @@ spring:
      
 server:
   port: 8080
+  
+security:
+  secret: "SecretKeyToGenJWTs"
+  EXPIRATION_TIME: 3600
+  TOKEN_PREFIX: "Bearer "
+  HEADER_STRING: "Authorization"
+  SIGN_UP_URL: "/user/register"
