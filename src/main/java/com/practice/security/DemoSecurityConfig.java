@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.practice.filter.DemoJWTAuthenticationFilter;
+import com.practice.filter.DemoJWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +37,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		System.out.println("SIGN_UP_URL:" + SIGN_UP_URL);
 		http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
 				.anyRequest().authenticated().and().addFilter(new DemoJWTAuthenticationFilter(authenticationManager()))
-				.addFilter(new DemoJWTAuthenticationFilter(authenticationManager())).sessionManagement()
+				.addFilter(new DemoJWTAuthorizationFilter(authenticationManager())).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	}

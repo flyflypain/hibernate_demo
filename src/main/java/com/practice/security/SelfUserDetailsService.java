@@ -22,6 +22,12 @@ public class SelfUserDetailsService implements UserDetailsService {
 		this.userRepository = userRepository;
 	}
 
+//	The only method that we had to implement is loadUserByUsername. 
+//	When a user tries to authenticate, this method receives the username, 
+//	searches the database for a record containing it, and (if found) returns an instance of User. 
+//	The properties of this instance (username and password) are then checked against the credentials passed by the user in the login request. 
+//	This last process is executed outside this class, by the Spring Security framework.
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Userpool applicationUser = userRepository.findByUserName(username);

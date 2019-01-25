@@ -1,7 +1,10 @@
 package com.practice.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,4 +43,13 @@ public class UserController {
 		}
 		return userResponse;
 	}
+
+	@GetMapping(value = "/getAllUsers")
+	public List<Userpool> getAllUser() {
+
+		List<Userpool> userList = userRepository.findAll();
+		return userList;
+
+	}
+
 }

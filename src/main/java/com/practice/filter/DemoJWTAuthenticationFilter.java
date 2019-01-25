@@ -22,6 +22,19 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.model.Userpool;
 
+//Note: You might be wondering what class is dealing with the requests issued to the /login endpoint. 
+//The answer to this question is simple, the JWTAuthenticationFilter class that 
+//you created previously extends UsernamePasswordAuthenticationFilter. This filter, 
+//which is provided by Spring Security, registers itself as the responsible for this endpoint. 
+//As such, whenever your backend API gets a request to /login, your specialization of this filter 
+//(i.e., JWTAuthenticationFilter) goes into action and handles the authentication attempt (through the attemptAuthentication method).
+
+/**
+ * 
+ * 
+ * @author lisheng
+ *
+ */
 public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final long EXPIRATION_TIME = 3600l;
@@ -54,6 +67,9 @@ public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationF
 
 	}
 
+	/**
+	 * 认证成功时的处理 ->返回一个token给客户端
+	 */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
@@ -63,6 +79,17 @@ public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationF
 				.sign(Algorithm.HMAC512(SECRET.getBytes()));
 
 		response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+	}
+
+	/**
+	 * 认证失败时的处理
+	 */
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+		response.setStatus(400);
+		response.setContentType("application/json");
+		response.getWriter().write("Authentication error :" + failed.getMessage());
 	}
 
 }
