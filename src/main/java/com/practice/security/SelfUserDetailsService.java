@@ -1,9 +1,10 @@
 package com.practice.security;
 
-import static java.util.Collections.emptyList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +35,9 @@ public class SelfUserDetailsService implements UserDetailsService {
 		if (applicationUser == null) {
 			throw new UsernameNotFoundException(username);
 		}
-		return new User(applicationUser.getUserName(), applicationUser.getPassword(), emptyList());
+		Set<SimpleGrantedAuthority> roleList = applicationUser.getRoleList().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toSet());
+
+		return new SelfUserDetails(applicationUser.getUserName(), applicationUser.getPassword(), roleList);
 	}
 }

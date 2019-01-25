@@ -11,9 +11,20 @@ import org.springframework.security.core.userdetails.UserDetails;
  * ① 定义 user 对象
  */
 public class SelfUserDetails implements UserDetails, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	private Set<? extends GrantedAuthority> authorities;
+
+	public SelfUserDetails(String username, String password, Set<? extends GrantedAuthority> authorities) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.authorities = authorities;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
