@@ -22,9 +22,7 @@ import com.auth0.jwt.interfaces.Claim;
 
 public class DemoJWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private final String HEADER_STRING = "Authorization";
-
-	private final String TOKEN_PREFIX = "Bearer ";
+	private final String HEADER_STRING = "Accesstoken";
 
 	public DemoJWTAuthorizationFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
@@ -34,18 +32,18 @@ public class DemoJWTAuthorizationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String tokenHeader = request.getHeader(HEADER_STRING);
-		if (tokenHeader == null || !tokenHeader.startsWith(TOKEN_PREFIX)) {
+		if (tokenHeader == null) {
+			chain.doFilter(request, response);
+		} else {
+			SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
 			chain.doFilter(request, response);
 		}
-		SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
-		chain.doFilter(request, response);
 
 	}
 
 	private Authentication getAuthentication(String tokenHeader) {
-		String token = tokenHeader.replace(TOKEN_PREFIX, "");
-		String username = JWT.decode(token).getSubject();
-		Claim claim = JWT.decode(token).getClaim("ROLE");
+		String username = JWT.decode(tokenHeader).getSubject();
+		Claim claim = JWT.decode(tokenHeader).getClaim("ROLE");
 		List<String> roleStrList = claim.asList(String.class);
 
 		Set<SimpleGrantedAuthority> roleList = roleStrList.stream().map(role -> new SimpleGrantedAuthority(role))

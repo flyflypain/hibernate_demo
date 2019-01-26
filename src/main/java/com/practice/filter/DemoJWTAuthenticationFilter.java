@@ -45,9 +45,7 @@ public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationF
 
 	private final String SECRET = "SecretKeyToGenJWTs";
 
-	private final String HEADER_STRING = "Authorization";
-
-	private final String TOKEN_PREFIX = "Bearer ";
+	private final String HEADER_STRING = "Accesstoken";
 
 	private final String ROLE_KEY = "ROLE";
 
@@ -90,7 +88,7 @@ public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationF
 				.withExpiresAt(new Date(System.currentTimeMillis() + Long.valueOf(EXPIRATION_TIME).longValue()))
 				.sign(Algorithm.HMAC512(SECRET.getBytes()));
 
-		response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+		response.setHeader(HEADER_STRING, token);
 	}
 
 	/**
