@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,11 +27,13 @@ public class TradeController {
 	@Autowired
 	private TradeService tradeService;
 
+	@PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 	@PostMapping(value = "")
 	public TradeResponse doTrade(@RequestBody TradeRegisterRequest request) {
 
+		String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 		String targetAccount = request.getTargetAccount();
-		String executeAccount = request.getExecuteAccount();
+		String executeAccount = username;
 		int amount = request.getAmount();
 		String tradeType = request.getTradeType();
 		Trade trade = new Trade(targetAccount, executeAccount, amount, TradeType.valueOf(tradeType));

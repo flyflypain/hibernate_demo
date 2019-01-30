@@ -34,7 +34,7 @@ import com.practice.security.SelfUserDetails;
 //(i.e., JWTAuthenticationFilter) goes into action and handles the authentication attempt (through the attemptAuthentication method).
 
 /**
- * 
+ * 用户登录时使用的认证过滤器
  * 
  * @author lisheng
  *
@@ -45,7 +45,7 @@ public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationF
 
 	private final String SECRET = "SecretKeyToGenJWTs";
 
-	private final String HEADER_STRING = "Accesstoken";
+	private final String HEADER_STRING = "Authorization";
 
 	private final String ROLE_KEY = "ROLE";
 
@@ -56,13 +56,16 @@ public class DemoJWTAuthenticationFilter extends UsernamePasswordAuthenticationF
 		this.authenticationManager = authenticationManager;
 	}
 
+	/**
+	 * 负责处理认证（基于Hash化后的密码）
+	 */
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 
 		try {
 			Userpool creds = new ObjectMapper().readValue(request.getInputStream(), Userpool.class);
-
+			System.out.println("JWTAuthentication=======>");
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUserName(),
 					creds.getPassword(), new ArrayList<>()));
 		} catch (IOException e) {

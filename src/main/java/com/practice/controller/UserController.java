@@ -1,6 +1,7 @@
 package com.practice.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practice.model.Role;
 import com.practice.model.Userpool;
 import com.practice.repository.UserRepository;
 import com.practice.request.UserRegisterRequest;
@@ -33,7 +35,9 @@ public class UserController {
 		Userpool user = new Userpool();
 		user.setUserName(request.getUserName());
 		user.setPassword(passwordEncoder.encode(request.getUserPassword()));
-
+		List<Role> roleList = request.getRoleList().stream().map(roleStr -> new Role(roleStr))
+				.collect(Collectors.toList());
+		user.setRoleList(roleList);
 		UserResponse userResponse = new UserResponse();
 
 		try {

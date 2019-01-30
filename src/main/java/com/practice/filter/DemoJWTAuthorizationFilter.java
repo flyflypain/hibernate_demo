@@ -22,7 +22,7 @@ import com.auth0.jwt.interfaces.Claim;
 
 public class DemoJWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-	private final String HEADER_STRING = "Accesstoken";
+	private final String HEADER_STRING = "Authorization";
 
 	public DemoJWTAuthorizationFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
@@ -32,6 +32,7 @@ public class DemoJWTAuthorizationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String tokenHeader = request.getHeader(HEADER_STRING);
+		System.out.println("JWTAuthorization=======>");
 		if (tokenHeader == null) {
 			chain.doFilter(request, response);
 		} else {

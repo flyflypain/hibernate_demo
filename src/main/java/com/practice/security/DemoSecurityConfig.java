@@ -38,7 +38,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
+		System.out.println("SecurityConfig#configure==============>");
 		http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll().and()
 				.addFilter(new DemoJWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new DemoJWTAuthorizationFilter(authenticationManager())).sessionManagement()
@@ -52,8 +52,13 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
+		System.out.println("SecurityConfig#CORSconfigure========>");
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);

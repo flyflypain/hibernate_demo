@@ -35,7 +35,7 @@ public class Userpool extends AbstractModel {
 	 * 相对应的role
 	 */
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "id")
 	private List<Role> roleList;
 
 }

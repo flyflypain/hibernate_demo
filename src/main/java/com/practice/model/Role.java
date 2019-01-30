@@ -14,13 +14,17 @@ import lombok.Data;
 @Table(name = "role")
 public class Role extends AbstractModel {
 
+	public Role() {
+	}
+
+	public Role(String role) {
+		this.role = role;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
 	private long roleId;
-
-	@Column(name = "user_id")
-	private long userId;
 
 	@Column(name = "role")
 	private String role;

@@ -31,9 +31,10 @@ public class SelfUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("SelfUserDetailService#loaduserByUserName =====> ");
 		Userpool applicationUser = userRepository.findByUserName(username);
 		if (applicationUser == null) {
-			throw new UsernameNotFoundException(username);
+			throw new RuntimeException(username + " doesn't exist");
 		}
 		Set<SimpleGrantedAuthority> roleList = applicationUser.getRoleList().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toSet());
