@@ -43,4 +43,5 @@ public class TradeResponse extends AbstractResponse {
 	 * 相对应的cashflow
 	 */
 	private List<Cashflow> cashflowList;
+
 }

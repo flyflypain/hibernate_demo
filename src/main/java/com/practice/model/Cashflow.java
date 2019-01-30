@@ -22,7 +22,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Cashflow")
-public class Cashflow {
+public class Cashflow extends AbstractModel {
 
 	/**
 	 * 构造器
