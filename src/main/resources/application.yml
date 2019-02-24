@@ -1,8 +1,7 @@
 spring.datasource:
-  platform: org.hibernate.dialect.PostgreSQL9Dialect
-  driverClassName: org.postgresql.Driver
-  url: jdbc:postgresql://localhost/jdbcdb?currentSchema=jdbc
-  username: lisheng
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/prac
+  username: root
   password: Lisheng114
 
 spring:
@@ -10,7 +9,7 @@ spring:
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
     show-sql: false
-    database: POSTGRESQL
+    database: mysql
     hibernate:
       ddl-auto: update
      
@@ -23,3 +22,9 @@ security:
   TOKEN_PREFIX: "Bearer "
   HEADER_STRING: "Authorization"
   SIGN_UP_URL: "/user/register"
+  
+info:
+  name: "demo"
+  description: "demoApp"
+  
+    

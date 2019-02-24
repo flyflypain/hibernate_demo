@@ -30,6 +30,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${security.SIGN_UP_URL}")
 	private String SIGN_UP_URL;
 
+	/** */
 	@Autowired
 	private SelfUserDetailsService userDetailsService;
 
@@ -69,7 +70,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// This allow us to expose the headers
 		corsConfiguration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Headers",
-				"Accesstoken, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, "
+				"Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, "
 						+ "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
 
 		source.registerCorsConfiguration("/**", corsConfiguration);

@@ -13,8 +13,8 @@ public class WithdrawEvent extends ApplicationEvent {
 
 	public WithdrawEvent(Trade trade) {
 		super(trade);
-		this.trade = trade;
-	}
+			this.trade = trade;
+		}
 
 	private String message;
 

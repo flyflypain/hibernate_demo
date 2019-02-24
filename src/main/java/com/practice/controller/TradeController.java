@@ -31,9 +31,10 @@ public class TradeController {
 	@PostMapping(value = "")
 	public TradeResponse doTrade(@RequestBody TradeRegisterRequest request) {
 
-		String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	
+		String executeAccount = auth.getPrincipal().toString();
 		String targetAccount = request.getTargetAccount();
-		String executeAccount = username;
 		int amount = request.getAmount();
 		String tradeType = request.getTradeType();
 		Trade trade = new Trade(targetAccount, executeAccount, amount, TradeType.valueOf(tradeType));

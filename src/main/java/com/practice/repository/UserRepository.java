@@ -13,6 +13,7 @@ public interface UserRepository extends JpaRepository<Userpool, Long> {
 	@Override
 	List<Userpool> findAll();
 
+	@SuppressWarnings("unchecked")
 	@Override
 	Userpool saveAndFlush(Userpool userpool);
 

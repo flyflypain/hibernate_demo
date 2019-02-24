@@ -109,7 +109,7 @@ public class Trade extends AbstractModel {
 			addCashflow(new Cashflow(null, tragetAccount, amount, CashflowSide.RECEIVE));
 			break;
 		case DEPOSIT:
-			addCashflow(new Cashflow(null, tragetAccount, amount, CashflowSide.RECEIVE));
+			addCashflow(new Cashflow(null, executeAccount, amount, CashflowSide.RECEIVE));
 			break;
 		case WITHDRAW:
 			addCashflow(new Cashflow(executeAccount, null, amount, CashflowSide.PAY));

@@ -37,14 +37,14 @@ public class BalanceService {
 
 	@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
 	public void depositForTrade(DepositEvent depositEvent) {
-		String tragetAccount = depositEvent.getTrade().getTragetAccount();
+		String executeAccount = depositEvent.getTrade().getExecuteAccount();
 		int amount = depositEvent.getTrade().getAmount();
 		try {
-			transferTo(tragetAccount, amount);
+			transferTo(executeAccount, amount);
 		} catch (Exception e) {
 			throw new TestException("400", "error occur while deposit");
 		}
-		log.info("{} deposit {}", tragetAccount, amount);
+		log.info("{} deposit {}", executeAccount, amount);
 	}
 
 	@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)

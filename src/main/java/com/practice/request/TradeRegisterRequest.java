@@ -7,8 +7,6 @@ public class TradeRegisterRequest {
 
 	private String targetAccount;
 
-	private String executeAccount;
-
 	private int amount;
 
 	private String tradeType;

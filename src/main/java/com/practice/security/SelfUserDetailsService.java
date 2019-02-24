@@ -13,6 +13,12 @@ import org.springframework.stereotype.Component;
 import com.practice.model.Userpool;
 import com.practice.repository.UserRepository;
 
+/**
+ *  
+ * 
+ * @author lisheng
+ *
+ */
 @Component
 public class SelfUserDetailsService implements UserDetailsService {
 
